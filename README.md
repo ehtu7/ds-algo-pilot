@@ -1,7 +1,7 @@
 # ds-algo-pilot
 # 315. Count of Smaller Numbers After Self
 ## Brute force solution :
-class Solution {
+
     public List<Integer> countSmaller(int[] nums) {
         List<Integer> res=new ArrayList<>();
         for (int i=0;i<nums.length;i++){
@@ -15,7 +15,7 @@ class Solution {
         }
         return res;
     }
-}
+
 
 ## Optimal One : using sorting and binary search
 Step1: create a list and sort it
