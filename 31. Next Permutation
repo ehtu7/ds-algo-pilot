@@ -1,0 +1,45 @@
+##https://leetcode.com/problems/next-permutation/description/
+Algorithm :
+ 1. iterate from back and find the index which can be swappable
+      a. check which indexed number is just lower than the current indexed number
+ 2. find the number which should be swapped with the number find in previous step
+      a. itterate the array from back and find the number which is just bigger than the number find in prev step
+ 3. then swap the number 
+ 4. reverse the left sub array from i+1 to arr.lenght 
+
+
+public void nextPermutation(int[] nums) {
+
+        int i=nums.length-2;
+        
+        while(i>=0 && nums[i]>=nums[i+1]){
+            i--;
+        }
+
+        if(i>=0){
+
+            int j=nums.length-1;
+            while(j>=0 &&  nums[j]<=nums[i])
+                j--;
+            swap(nums,i,j);
+        }
+        reverse(nums,i+1);
+        
+        
+    }
+    
+    public void swap(int[] nums, int i, int j){
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+    
+    public void reverse(int[] nums, int start){
+        int end = nums.length-1;
+        while(start < end) {
+            swap(nums, start, end);
+            start++;
+            end--;
+        }
+    }
+    
