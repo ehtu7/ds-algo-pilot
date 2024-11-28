@@ -1,0 +1,38 @@
+## https://leetcode.com/problems/3sum/description/
+
+Algorithm :
+  1. sort the array
+  2. iterate the array keeping fic one element
+  3. Use two pinter to traverse such that = starti+1 go end=arr.length-1
+  4. calculate the sum 
+  5. if sum is zero. then repeat for other possibilities by increasing start pointer and decreasing end pointer
+  6. if sum is greater than zero it means we have to try with lesser value so decrease the end pointer : end--;
+  7. if sum is lesser than zero it means we have to try with hight value so increase start++;
+  8. repeate it for arr.lenght-2;
+
+ public List<List<Integer>> threeSum(int[] nums) {
+       
+       if(nums==null || nums.length<3) return new ArrayList<>();
+        Arrays.sort(nums);
+        Set<List<Integer>> res=new HashSet<>();
+       for(int i=0;i<nums.length-2;i++){
+        int left=i+1;
+        int right=nums.length-1;
+        while(left<right){
+            int sum=nums[i]+nums[left]+nums[right];
+            if(sum==0){
+                res.add(Arrays.asList(nums[i],nums[left],nums[right]));
+                left++;
+                right--;
+            }else if(sum<0){
+                left++;
+            }else {
+                right--;
+            }
+        }
+       }
+       
+       return new ArrayList<>(res);
+    }
+
+
