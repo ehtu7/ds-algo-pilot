@@ -1,0 +1,33 @@
+problem : https://leetcode.com/problems/sort-colors/description/
+## Solution 1: 
+      Time Complexity : O(N) 
+      Space Complexity : O(1)
+public void sortColors(int[] nums) {
+        int i=0;
+        int j=0;
+        int k=0;
+        for(int num:nums){
+            if(num==0){
+                i++;
+            }else if(num==1){
+                j++;
+
+            }else if(num==2){
+                k++;
+            }
+        }
+        
+        for(int n=0;n<nums.length;n++){
+            if(i>0){
+                nums[n]=0;
+                i--;
+            }else if(j>0){
+                nums[n]=1;
+                j--;
+            }else if(k>0){
+                nums[n]=2;
+                k--;
+            }
+        }
+        
+    }
