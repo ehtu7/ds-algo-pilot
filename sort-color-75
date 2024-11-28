@@ -31,3 +31,37 @@ public void sortColors(int[] nums) {
         }
         
     }
+
+
+## Solution 2:
+
+class Solution {
+    public void sortColors(int[] nums) {
+        int start=0;
+        int end=nums.length-1;
+        int mid=0;
+
+        while(mid<=end){
+            switch(nums[mid]){
+            case 2:
+                swap(nums,mid,end);
+                end--;
+                break;
+            case 0:
+                swap(nums,mid,start);
+                start++;
+                mid++;
+                break;
+            case 1:
+                mid++;
+                break;
+            }
+        }
+        
+    }
+    public void swap(int [] nums, int i,int j){
+        int temp=nums[i];
+        nums[i]=nums[j];
+        nums[j]=temp;
+    }
+}
