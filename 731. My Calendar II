@@ -1,0 +1,31 @@
+https://leetcode.com/problems/my-calendar-ii/description/
+Intutition : Prefix sum/cumulative sum
+Algorithm :
+  1. take a ordered map
+  2. make an entry like starttime as key and value is 1, when key is end time then value is -1;
+  3. take a count variable which tracks the number of bookings at particular time entry 
+  4. now iterate map and do the cumulative sum
+      a. when sum > k then remove entry from hashMap if it has value as 0 else revert the entry value .
+      b. return false;
+  5. after out of loop return true
+
+Map<Integer,Integer> map=new TreeMap<>();
+ public boolean book(int startTime, int endTime) {
+  map.put(startTime, map.getOrDefault(startTime, 0)+1);
+  map.put(startTime, map.getOrDefault(endTime, 0)-1);
+  int count=0;
+   for(Integer i:map.keySet()){
+            count+=map.get(i);
+            if(count>2){
+                map.put(endTime, map.get(endTime) +1);
+                map.put(startTime, map.get(startTime) - 1);
+                if(map.get(startTime)==0)
+                    map.remove(startTime);
+                if(map.get(endTime)==0)
+                    map.remove(endTime);
+                return false;
+            }
+        }
+    return true;
+
+ }
