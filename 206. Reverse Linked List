@@ -1,0 +1,29 @@
+https://leetcode.com/problems/reverse-linked-list/description/
+
+Algorithm 1: 
+  - using stack we can reverse it. (Brute force way of doing it)
+
+Algorithm 2:
+  - take two pinter prev and current
+  - assign prev as num and curr as head
+  - repeate till curr!=null
+      tempNode=curr.next;
+      curr.next=prev;
+      prev=curr;
+      curr=tempNodee;
+
+public ListNode reverseList(ListNode head) {
+        //return help(head);
+        ListNode currentNode=head;
+        ListNode previousNode=null;
+
+        while(currentNode!=null){
+           ListNode temp=currentNode.next;
+           currentNode.next=previousNode;
+           previousNode=currentNode;
+           currentNode=temp;
+
+        }
+        head=previousNode;
+        return head;
+    }
