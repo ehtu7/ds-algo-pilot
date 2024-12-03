@@ -1,0 +1,39 @@
+https://leetcode.com/problems/linked-list-cycle-ii/description/
+
+Algorithm 1: taking help of extra space:
+  - take a set, to track the visited node
+  - whenever visit a node fisr check whether it is there in set or not. 
+      - if yes then return the node
+      - else move ahead
+  - end the processing of whole linked list. 
+  - if not found return null
+
+Algorithm 2: Two pointer solution - fast and slow
+  - take two pointer slow and fast. fast will traverse twice as compare to slow
+  - once they meet with each other first time take fast pointer to start of the node.
+  - and now start traversing with same speed as slow.
+  - when they meet again , that will be the answer. return the intersection node.
+  - else end of the processing return null;
+public class Solution {
+    public ListNode detectCycle(ListNode head) {
+        ListNode slow=head;
+        ListNode fast=head;
+
+        while(fast !=null && fast.next !=null){
+            fast=fast.next.next;
+            slow=slow.next;
+            if(fast==slow){
+                
+                while(head!=slow){
+                    head=head.next;
+                    slow=slow.next;
+                    
+                }
+                 return slow;
+            }
+        }
+        return null;
+       
+        
+    }
+}
