@@ -1,0 +1,31 @@
+https://leetcode.com/problems/merge-k-sorted-lists/description/
+
+Algorithm 1:
+  -use merging technique as similar to merge sort
+
+Algorithm 2:
+  - take a prioriy queue of size k
+  - initialize with firs node of each linked list of k size array
+  - iterate till pq is not empty
+      - poll first element
+      - assign its next to head 
+      - offer polled next node in pq
+
+public ListNode mergeKLists(ListNode[] lists){
+        PriorityQueue<ListNode> pq=new PriorityQueue<>((x,y)->x.val-y.val);
+        ListNode res=new ListNode(0);
+        ListNode head=res;
+        for(int i=0;i<lists.length;i++){
+            if(lists[i]!=null)
+                pq.add(lists[i]);
+        }
+        while(!pq.isEmpty()){
+            ListNode node=pq.poll();
+            head.next=node;
+            head=head.next;
+            if(node.next!=null)
+                pq.offer(node.next);
+        }
+
+        return res.next;
+    }
