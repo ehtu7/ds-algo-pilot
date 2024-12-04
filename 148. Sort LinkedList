@@ -1,0 +1,56 @@
+https://leetcode.com/problems/sort-list/description/
+
+Algorithm :
+  1. find the middle node
+  2. divide into left node  and right node
+  3. then call sortList() these two nodes
+  4. then merge these two nodes
+
+class Solution {
+    public ListNode sortList(ListNode head) {
+        if(head==null || head.next==null){
+            return head;
+        }
+        ListNode mid=findMiddleNode(head);
+        
+        ListNode newHead=mid.next;
+        mid.next=null;
+        ListNode left=sortList(head);
+        ListNode right=sortList(newHead);
+        return mergeSortedList(left,right);
+        
+    }
+    public ListNode findMiddleNode(ListNode head){
+        ListNode slow=head;
+        ListNode fast=head;
+        while( fast.next!=null && fast.next.next!=null){
+            slow=slow.next;
+            fast=fast.next.next;
+        }
+        return slow;
+    }
+    public ListNode mergeSortedList(ListNode p1, ListNode p2){
+        if(p1==null || p2==null){
+            return p1==null?p2:p1;
+        }
+        ListNode res=new ListNode(0);
+        ListNode curr=res;
+
+        while(p1!=null && p2!=null){
+            if(p1.val<p2.val){
+                curr.next=p1;
+                p1=p1.next;
+
+            }else{
+                curr.next=p2;
+                p2=p2.next;
+            }
+            curr=curr.next;
+            
+        }
+        if(p1==null || p2==null){
+            curr.next=(p1!=null)?p1:p2;
+        }
+        return res.next;
+    }
+}
