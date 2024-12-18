@@ -1,0 +1,40 @@
+https://www.geeksforgeeks.org/problems/sort-a-stack/1
+Intution :
+  -try with smaller input
+Algorithm:
+  - call sort method with smaller size of stack
+  - do it till size of stack remain 1.
+  - insert the last poped element again in the stack
+      - insertion is again repeat in recurrsive manner
+      - if size of stack become 0 or peek element is lesser than the num to be inserted then this becomes base condition
+      - repeate this process by removing the last element from the stack.
+      - then in inductions step push back into stack 
+
+
+class GfG {
+    public Stack<Integer> sort(Stack<Integer> s) {
+        
+        if(s.size()==1)
+            return s;
+        int temp=s.pop();
+        sort(s);
+        insert(s,temp);
+        
+        return s;
+        
+    }
+    
+    public void insert(Stack<Integer> s, int num){
+        
+        if(s.size()==0 || s.peek()<num){
+            s.push(num);
+            return;
+        }
+        
+        int temp=s.pop();
+        insert(s,num);
+        s.push(temp);
+        
+    }
+    
+}
