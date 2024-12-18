@@ -1,0 +1,36 @@
+https://leetcode.com/problems/subsets/description/
+
+Intution:
+  Input-Output method, create a choice diagram
+
+Algorithm:
+  - create an empty output
+  - while in recurssive way create two copy of output
+  - add one element in one copy of output
+  - and remove the last updated element from another copy of output
+  - make recurssive call for each output
+
+class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> res=new ArrayList<List<Integer>>();
+        help(res,nums,new ArrayList<Integer>(),0);
+        return res;
+    }
+
+    public void help(List<List<Integer>> res, int [] nums, ArrayList<Integer> op,int i){
+        if(nums.length==i){
+            res.add(new ArrayList<>(op));
+            return;
+        }
+
+        ArrayList<Integer> op1=op;
+        ArrayList<Integer> op2=op;
+        op2.add(nums[i]);
+        i++;
+        help(res,nums,op2,i);
+        op1.remove(op1.size()-1);
+        help(res,nums,op1,i);
+
+        
+    }
+}
