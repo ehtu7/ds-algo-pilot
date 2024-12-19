@@ -1,0 +1,39 @@
+https://leetcode.com/problems/permutations/description/
+
+Intution:
+  - to find the permutation from a given array , It is obvious to reshuffle the elements and bring new order with the fixed length. 
+    so for each suffle position there will be n number of choices. And choices leads to think about recurssion as a solution
+
+Algorithm:
+  - start recurrsive call, there we get result whenever our temporary output will have the same size as the nums array
+  - if not then start a itteration to pick all the choices
+  - then again make a recurssive call
+  - and at last revert the change from temporrary output (ie backtrack the solution)
+
+
+
+class Solution {
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> res=new ArrayList<List<Integer>>();
+        
+         help(res,nums,new ArrayList<Integer>());
+        return res;
+        
+    }
+
+    public void help(List<List<Integer>> res,int [] nums, List<Integer> op){
+        if(op.size()==nums.length){
+            res.add(new ArrayList<>(op));
+        }
+        
+        for(int i=0;i < nums.length;i++){
+            if(op.contains(nums[i])) continue;
+            op.add(nums[i]);
+            help(res,nums,op);
+            op.remove(op.size()-1);
+            
+        }
+        
+        
+    }
+}
