@@ -1,0 +1,42 @@
+https://leetcode.com/problems/combination-sum-ii/description/
+Intution: 
+  - This problem is very close to subset sum problem.
+
+Algorithm:
+  - for each candidates there are two option whether to add or skip.
+      - if we add then check the sum against target
+      - if it is equal then add to response
+      - return
+  - if we skip it, then backtrack , revert the changes made. then again do the recurrsive call 
+
+class Solution {
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        List<List<Integer>> res= new ArrayList<List<Integer>>();
+        Arrays.sort(candidates);
+        help(res,candidates,target,0,new ArrayList<Integer>(),0);
+        return res;
+    }
+    public void help(List<List<Integer>> res,int[] candidates, int target, int i,ArrayList<Integer> op,int sum){
+    
+        
+        if(sum==target){
+            res.add(new ArrayList<>(op));
+        }
+
+        if (sum > target || i >= candidates.length) {
+            return; 
+        }
+        
+        for(int j=i;j<candidates.length;j++){
+            if (j > i && candidates[j] == candidates[j - 1]) continue;
+            op.add(candidates[j]);
+            help(res,candidates, target,j+1,op,sum+candidates[j]);
+            int temp=op.get(op.size()-1);
+            op.remove(op.size()-1);
+            
+        }
+        
+    }
+}
+
+
