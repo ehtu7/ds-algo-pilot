@@ -1,0 +1,81 @@
+https://leetcode.com/problems/n-queens/description/
+
+Intution:
+  - we have to arrange n queens such that each row must contains one queen such a way that no queeens can cut it the previous arranged queens.
+  - We have to find all the possible arrangements. so each cell can be one probable position so in case going forward if we get to know there is no possible solution for this cell then 
+    backtrack.
+
+Algorithm:
+  - create a help method
+  - start a loop for each column corresponding to each row
+  - check the valid position by verifying three direction 
+      - for j contant
+      - where i==j
+      - where i+j == row+column
+  - then make recursive call with row+1
+  - since we need to check all position then backtrack
+
+
+class Solution {
+    public List<List<String>> solveNQueens(int n) {
+        List<List<String>> res = new ArrayList<>();
+        char[][] board = new char[n][n];
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                board[i][j] = '.';
+            }
+        }
+        help(res,board,n,0,new ArrayList<>());
+        return res;
+       
+    }
+
+    public void help(List<List<String>> res,char[][] board, int n,int row, ArrayList<String> list){
+        
+        if(row==n){
+            res.add(construct(board));
+        }
+        for(int j=0;j<n;j++){
+            if(isValid(board,row,j,n)){
+                
+                board[row][j]='Q';
+                help(res,board,n,row+1,list);
+                board[row][j]='.';
+            }
+        }
+        
+    }
+private List<String> construct(char[][] board) {
+        List<String> result = new ArrayList<>();
+        for (int i = 0; i < board.length; i++) {
+            result.add(new String(board[i]));
+        }
+        return result;
+    }
+    private boolean isValid(char[][] board, int row, int col, int n) {
+        // Check the column
+        for (int i = 0; i < row; i++) {
+            if (board[i][col] == 'Q') return false;
+        }
+
+        // Check the top-left diagonal
+        for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
+            if (board[i][j] == 'Q') return false;
+        }
+
+        // Check the top-right diagonal
+        for (int i = row - 1, j = col + 1; i >= 0 && j < n; i--, j++) {
+            if (board[i][j] == 'Q') return false;
+        }
+
+        for(int j=0;j<=col;j++){
+            if(board[row][j]=='Q') return false;
+        }
+
+        return true;
+    }
+
+    
+}
+  
