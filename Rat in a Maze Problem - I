@@ -1,0 +1,48 @@
+https://www.geeksforgeeks.org/problems/rat-in-a-maze-problem/1
+
+Intution:
+  - the generation of all possible paths leads to think the recursive approach 
+
+Algorithm:
+  - start recursive call for each direction
+  
+
+Time Complexity:
+  - 4^(n*n)
+Space Complexity:
+  - O(n*n)
+
+class Solution {
+    // Function to find all possible paths
+    public ArrayList<String> findPath(ArrayList<ArrayList<Integer>> mat) {
+        // code here
+        ArrayList<String> res=new ArrayList<>();
+        String s="";
+        help(mat,res,0,0,s,mat.size());
+        return res;
+    }
+    
+    public void help(ArrayList<ArrayList<Integer>> mat,ArrayList<String> res,int x, int y,String s,int n){
+        
+        if(x<0 || y<0 || x==n ||  y==n || mat.get(x).get(y)==0){
+            return;
+        }else if(x==n-1 && y==n-1){
+            res.add(s);
+            return;
+        }
+        
+        else {
+        
+            mat.get(x).set(y,0);
+            
+            help(mat,res,x+1,y,s.concat("D"),n);
+            help(mat,res,x,y-1,s.concat("L"),n);
+            help(mat,res,x,y+1,s.concat("R"),n);
+            help(mat,res,x-1,y,s.concat("U"),n);
+            
+            mat.get(x).set(y,1);
+        
+        }
+    }
+    
+}
