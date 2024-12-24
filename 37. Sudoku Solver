@@ -1,0 +1,94 @@
+https://leetcode.com/problems/sudoku-solver/description/
+
+Intution:
+
+Algorithm:
+  - call recursive method
+  - iterate through cell ,check for empty cell
+      -if cell is not empty then call recursive method with col+1
+      - if cell is empty then check for validity of the number to be inserted
+            - check along row
+            - check along col
+            - check in the 3*3 matrix in which row and col lies
+      - if validity is true 
+            - then update the board for that row and col with num
+            - then again make recursive call with col+1
+            - if in case all placement is correct then do not back track
+            - if not then backtrack
+
+      
+  
+  
+
+class Solution {
+    public void solveSudoku(char[][] board) {
+        
+       
+        help(board,0,0);
+
+    }
+
+    public boolean help(char[][] board, int row,int col){
+        
+        if(row==9){
+            return true;
+        }
+        if(col==9){
+            return help(board,row+1,0);
+        }
+
+        if(board[row][col]!='.'){
+           
+            return help(board, row,col+1);
+        }
+            
+        for(char num='1';num<='9';num++){
+            if(isValid(board,num,row,col)){
+                board[row][col]=num;
+                boolean res=help(board,row,col+1);
+                if(res)
+                    return res;
+            }
+               
+        }
+        //conditional backtracking 
+        board[row][col]='.';    
+        return false;
+    }
+    
+
+/**
+    1. check along row
+    2. check along column
+    3. check along the 3*3 matrix where row and col lies
+ */
+    public boolean isValid(char[][] board, char numc,int row, int col){
+        
+       
+        for(int j=0;j<9;j++){
+            if(board[row][j]==numc)
+                return false;
+            
+        }
+        for(int i=0;i<9;i++){
+            if(board[i][col]==numc)
+                return false;
+            
+        }
+        int startRow = (row / 3) * 3;
+        int startCol = (col / 3) * 3;
+
+
+        for (int i = startRow; i < startRow + 3; i++) {
+            for (int j = startCol; j < startCol + 3; j++) {
+                if (board[i][j] == numc) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+
+    }
+
+}
