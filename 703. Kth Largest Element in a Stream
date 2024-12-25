@@ -1,0 +1,34 @@
+703. Kth Largest Element in a Stream
+
+Intution:
+	- The problem statement says to find the kth largest element. One way to solve this problem is to sort it then return kth element. But by doing that we will end up with O(nlogn) time complexity. However there is no need to sort all the elements. why not to sort that many elements which are asked for. So Heap data structure allows to do that. And then we can improve the time complexity from O(nlogn) to O(nlogk).
+	
+Algorthim:
+	- create a min priorityqueue (as lower elements sits at top position in min heap
+	- maintain the size of heap of K
+	- whenever if you add some value to the heap there again maintain size of heap of k
+	- then return peek element
+	
+
+Code:
+class KthLargest {
+    PriorityQueue<Integer> pq=new PriorityQueue<>();
+    int k;
+    public KthLargest(int k, int[] nums) {
+        for(Integer i:nums){
+            pq.add(i);
+            if(pq.size()>k)
+                pq.poll();
+        }
+        this.k=k;
+    }
+    
+    public int add(int val) {
+        pq.offer(val);
+        while(pq.size()>k)
+            pq.poll();
+        
+        return pq.peek();
+        
+    }
+}
