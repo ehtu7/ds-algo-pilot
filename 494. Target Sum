@@ -1,0 +1,35 @@
+https://leetcode.com/problems/target-sum/description/
+Intution:
+  - there are two option + and - . we need to keep at position as many numbers in nums[].
+  - and to generate all possiblities, the intution says try recurssion and backtracking.
+Algorithm:
+  - create a recurssive method
+  - base case will be when index == nums length and sum == target then increase count and return
+  - call recurssive method with sum+nums[i] and increse index in next call
+  - call recurssive method with sum-nums[i] and increse index in next call
+
+Recursive Solution:
+class Solution {
+    public int findTargetSumWays(int[] nums, int target) {
+        int resCount=0;
+        return help(nums,target,0 ,resCount,0);
+    }
+
+   
+   public int help(int [] nums, int target, int sum,int resCount,int index){
+
+    if(index==nums.length){
+        if(sum==target){
+            resCount++;
+        }
+        return resCount;
+    }
+
+    resCount=help(nums, target,sum+nums[index],resCount,index+1);
+    resCount=help(nums, target,sum-nums[index],resCount,index+1);
+    return resCount;
+   }
+   
+}
+
+**Try improving performance using DP
