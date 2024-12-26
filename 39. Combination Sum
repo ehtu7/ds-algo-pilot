@@ -1,0 +1,41 @@
+https://leetcode.com/problems/combination-sum/description/
+Intution:
+  -Finding all combinations means any candidates can lead to answer. so taking each element as an initial input then to proceed further in the search of answer, 
+  if at any pooint of time, it is being realized that the decision which we made is not converging to answer then backtrack.
+
+Algoeithm:
+  - create a help recursive method
+  - start a loop in order to pick each element
+  - add to list , decrease from target
+      -check if target <0
+          - back track
+      - check base condition target == 0
+          - yes, then add to res
+          - and backtrack
+
+class Solution {
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> res= new ArrayList<List<Integer>>();
+        help(res, candidates,target,new ArrayList<>(),0);
+        return res;
+    }
+    public void help(List<List<Integer>> res, int [] candidates,int target,ArrayList<Integer> list,int start){
+
+        if(target==0){
+            res.add(new ArrayList<>(list));
+        }
+        else if(target<0){
+            return;
+        }
+
+        for(int i=start;i<candidates.length;i++){
+            if(candidates[i]>target) continue;
+            list.add(candidates[i]);
+            help(res,candidates,target-candidates[i],list,i);
+            list.remove(list.size()-1);
+        }
+
+    }
+}
+    
+      
