@@ -1,0 +1,35 @@
+https://leetcode.com/problems/combination-sum-iii/description/
+
+Intution:
+  -combinations of elements of input leads to result, it means there can be multiple answers of this to generate multiple answers each input can be possible choice. 
+  -wherever choices comes in the picture try to think recurssivly 
+
+Algorithm:
+  - create a recurssive method
+  - base case if size of list is equal to k and thne sum must be equal to n then this combination will be one of the answer
+      - if yes add in the list
+      - return
+  - then backtrack
+
+
+class Solution {
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        List<List<Integer>> res=new ArrayList<List<Integer>>();
+        help(res,n,k,new ArrayList(),0,1);
+        return res;
+    }
+
+    public void help(List<List<Integer>> res, int n,int k, ArrayList<Integer> list, int sum,int start){
+        if(list.size()==k){
+            if (sum==n){
+                res.add(new ArrayList<>(list));
+            }
+
+        }
+        for(int i=start;i<=9;i++){
+            list.add(i);
+            help(res, n,k,list,sum+i,i+1);
+            list.remove(list.size()-1);
+        }
+    }
+}
