@@ -1,0 +1,44 @@
+https://leetcode.com/problems/letter-case-permutation/description/
+
+Algorithm:
+  - call recursive method with parmeters res as list, result as String op, and original String s
+  - if s size ==0
+      - add op in res
+  - make call for two case one with lowerCase and one with Upper case
+
+class Solution {
+    public List<String> letterCasePermutation(String s) {
+        ArrayList<String> res=new ArrayList<>();
+        help(res,s,"");
+        return res;
+    }
+    public void help(ArrayList<String> res,String s, String op){
+
+        if(s.isEmpty()){
+            
+                res.add(op);
+                return;
+        }
+
+        String op1=op;
+        String op2=op;
+        op1=op1+s.charAt(0);
+        if(s.charAt(0)>=97 && s.charAt(0)<=122){
+
+            op2=op2+(s.charAt(0)+"").toUpperCase();
+            s=s.substring(1);
+            help(res,s,op2);
+            help(res,s,op1);
+        }else if(s.charAt(0)>=65 && s.charAt(0)<=90){
+            op2=op2+(s.charAt(0)+"").toLowerCase();
+            s=s.substring(1);
+            help(res,s,op2);
+            help(res,s,op1);
+        }else if(s.charAt(0)>=48 && s.charAt(0)<=57){  ###here we are maing only one recursive call because for number only one choice left
+            op2=op2+s.charAt(0);
+            s=s.substring(1);
+            help(res,s,op2);
+        }
+        
+    }
+}
