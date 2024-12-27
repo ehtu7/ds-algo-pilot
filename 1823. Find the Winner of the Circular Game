@@ -1,0 +1,25 @@
+https://leetcode.com/problems/find-the-winner-of-the-circular-game/description/
+
+Recurssive code:
+class Solution {
+    public int findTheWinner(int n, int k) {
+        
+        List<Integer> friends = new ArrayList<>();
+        for (int i = 1; i <= n; i++) {
+            friends.add(i);
+        }
+        return helper(friends, k, 0);
+    }
+
+    private int helper(List<Integer> friends, int k, int start) {
+        
+        if (friends.size() == 1) {
+            return friends.get(0);
+        }
+        int delIndex = (start + (k - 1)) % friends.size();
+        friends.remove(delIndex);
+        return helper(friends, k, delIndex);
+    }
+
+}
+
