@@ -1,0 +1,33 @@
+https://leetcode.com/problems/powx-n/description/
+
+Algorithm:
+  - if n is odd : res*x;
+  - else if n is odd : apply(x*x), n/2;
+
+Runtime: O(logn)
+
+class Solution {
+    public double myPow(double x, int n) {
+        
+        double res=help(x,Math.abs(n));
+        if(n<0){
+            return 1/help(x,n*(-1));
+        }
+        return help(x,n);
+    }
+
+    public double help(double x, int n){
+
+        if(n==1){
+            return x;
+        }else if(n==0){
+            return 1.0;
+        }
+        
+        double res=help(x*x,n/2);
+        if(n%2!=0){
+            res=res*x;
+        }
+        return res;
+    }
+}
