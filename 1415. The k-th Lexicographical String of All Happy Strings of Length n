@@ -1,0 +1,40 @@
+https://leetcode.com/problems/the-k-th-lexicographical-string-of-all-happy-strings-of-length-n/description/
+
+
+Algorithm:
+  -create a recursive method with param 
+
+
+class Solution {
+    public String getHappyString(int n, int k) {
+        String s="abc";
+        String res="";
+        ArrayList<String> list=new ArrayList<>();
+        help(list,res,s,n);
+        if (k > list.size()) {
+            return "";
+        }
+        return list.get(k-1);
+    }
+
+    public void help(ArrayList<String> list,String res, String s, int n){
+        if(res.length()==n){
+            list.add(res);
+            return;
+        }
+        
+        for(int i=0;i<s.length();i++){
+            if(res.length()==0 || res.charAt(res.length()-1)!=s.charAt(i)) {
+            res=res+s.charAt(i);
+            help(list,res,s,n);
+            res=res.substring(0,res.length()-1);
+            }
+        }
+        
+      
+    }
+
+
+}
+ 
+
