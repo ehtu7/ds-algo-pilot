@@ -1,0 +1,44 @@
+https://leetcode.com/problems/partition-equal-subset-sum/description/
+
+Algorithm:
+  - compute the sum of an nums 
+      -if sum is odd return false
+      -else call recursive help()
+      - if num is less than target then there are two choices:
+            - take max of sum calculated one by decresing from target and call for another n-1 elements and another just by passing that number
+      - if num is greated than target the skip it
+      - memoize the solution
+
+
+class Solution {
+    public boolean canPartition(int[] nums) {
+        int target=0;
+        for(int i:nums){
+            target+=i;
+        }
+        System.out.println("target:"+target);
+        if(target%2!=0){
+            return false;
+        }
+        Boolean [][] dp=new Boolean[nums.length+1][target+1];
+        return help(nums,target/2,nums.length,dp);
+    }
+    
+    public boolean help(int [] arr, int target,  int n,Boolean [][] dp){
+        if(target==0){
+            return true;
+        }
+        if(n==0)
+            return false;
+        
+        if(dp[n][target]!=null){
+            return dp[n][target];
+        }
+        if(arr[n-1]<=target){
+            return dp[n-1][target]=help(arr,target-arr[n-1],n-1,dp) || help(arr,target,n-1,dp);
+        }
+        return  dp[n][target]=help(arr,target,n-1,dp);
+        
+    }
+}
+  
