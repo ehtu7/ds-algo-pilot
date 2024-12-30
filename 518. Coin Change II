@@ -1,0 +1,55 @@
+https://leetcode.com/problems/coin-change-ii/description/
+
+Intution:
+  -Based on fractional kanpsack
+
+Algorithm:
+  - construct a 2d Array and initialize it 
+  - start a recurssive method by passing 2d array 
+  - each element has choice 
+      - either that can be added
+          -if added then check for result after adding this
+          - check for the each n and target in the 2 d matrix if found return from there.
+          
+      - repeat the process for each elememnt
+  -return the result from 2d matrix
+
+
+class Solution {
+    public int change(int amount, int[] coins) {
+    
+    Integer [][] dp=new Integer[coins.length+1][amount+1];
+    for(int i=0;i<coins.length+1;i++){
+        for(int j=0;j<amount+1;j++){
+            if(i==0){
+                dp[i][j]=0;
+            }if(j==0){
+                dp[i][j]=1;
+            }
+        }
+    }
+
+    return help(amount,coins,coins.length,dp);
+    }
+
+    public int help(int amount, int []coins,int n,Integer[] [] dp){
+        
+        if(amount==0){
+            return 1;
+        }
+        if(n==0){
+            return 0;
+        }
+        if(dp[n][amount]!=null){
+            return dp[n][amount];
+        }
+
+        if(coins[n-1]<=amount){
+            dp[n][amount]=help(amount-coins[n-1],coins,n,dp)+help(amount,coins,n-1,dp);
+        }else{
+            dp[n][amount]=help(amount,coins,n-1,dp);
+        }
+        return dp[n][amount];
+        
+    }
+}
