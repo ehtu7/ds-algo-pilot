@@ -1,0 +1,34 @@
+https://www.geeksforgeeks.org/problems/rod-cutting0840/1
+
+Intution:
+  - this question is based on fractional knapsack, compare with knapsack problem , here target capacity is length of price array
+
+Algorithm:
+  -take a 2-d array initialize with all 0.
+  -start loop from i-> 1 to n
+      -start loop from j-> 1 to n
+        -check for length 
+            - if yes then update the dp[i][j] with Maximum value out of inclusion and exclusion option
+
+  - return dp[n][n] where n is length of price array.
+
+
+class Solution {
+    public int cutRod(int[] price) {
+        int n=price.length;
+        int [][] dp=new int[n+1][n+1];
+        for(int i=1;i<=n;i++){
+            for(int j=1;j<=n;j++){
+                if(i<=j){
+                    dp[i][j]=Math.max(price[i-1]+dp[i][j-i],dp[i-1][j]);
+                }else{
+                    dp[i][j]=dp[i-1][j];
+                }
+                
+            }
+        }
+        return dp[n][n];
+    }
+    
+}
+
