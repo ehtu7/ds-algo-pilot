@@ -1,0 +1,62 @@
+https://leetcode.com/problems/longest-common-subsequence/description/
+
+Intutions:
+  start creating choice diagram from end of the string. There will be three choices. 
+    -One when find the right match
+    -when right match is not found then check with
+        - s1 with reduced index
+        - s2 with reduced index
+Algorithm:
+  -
+
+class Solution {
+    public int longestCommonSubsequence(String text1, String text2) {
+        
+        int n=text1.length();
+        int m=text2.length();
+        int [][] dp=new int[n+1][m+1];
+        // for(int i=0;i<=n;i++){
+        //     for(int j=0;j<=m;j++){
+                
+        //             dp[i][j]=-1;
+                
+        //     }
+        // }
+        //return help(dp,n,m,text1,text2);
+        return topDown(text1,text2,dp);
+
+    }
+    public int help(int [][] dp, int n, int m, String s1, String s2){
+        if(n==0 || m==0){
+            return 0;
+        }
+
+        if(dp[n][m]!=-1){
+            return dp[n][m];
+        }
+        if(s1.charAt(n-1)==s2.charAt(m-1)){
+            dp[n][m] = 1+help(dp,n-1,m-1,s1,s2);
+        }
+        else
+            dp[n][m] = Math.max(help(dp,n-1,m,s1,s2),help(dp,n,m-1,s1,s2));
+
+        return dp[n][m];
+    }
+
+    public int topDown(String s1, String s2,int [][] dp){
+
+        for(int i=0;i<=s1.length();i++){
+            for(int j=0;j<=s2.length();j++){
+                if(i==0 ||  j==0){
+                    dp[i][j]=0;
+                }else if(s1.charAt(i-1)==s2.charAt(j-1)){
+                    dp[i][j]=1+dp[i-1][j-1];
+                }else{
+                    dp[i][j]=Math.max(dp[i-1][j],dp[i][j-1]);
+                }
+
+            }
+        }
+        return dp[s1.length()][s2.length()];
+    }
+}
