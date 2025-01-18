@@ -1,0 +1,36 @@
+https://www.geeksforgeeks.org/problems/matrix-chain-multiplication0303/1
+
+Intution:
+
+Algorithm:
+
+class Solution {
+    public static int [][] dp=new int[101][101];
+    static int matrixMultiplication(int arr[]) {
+    for(int i=0;i<101;i++){
+        for(int j=0;j<101;j++){
+            dp[i][j]=-1;
+        }
+    }
+       return solve(arr,1,arr.length-1,Integer.MAX_VALUE);
+    }
+    
+    public static int solve(int [] arr, int i, int j, int minVal){
+        
+        if(i>=j){
+            return 0;
+        }
+        if(dp[i][j]!=-1){
+            return dp[i][j];
+        }
+        
+        for(int k=i;k<j;k++){
+            minVal=Math.min((solve(arr,i,k,minVal)
+            +solve(arr,k+1,j,minVal)
+            +(arr[i-1]*arr[k]*arr[j])), minVal);
+            dp[i][j]=minVal;
+        }
+        
+        return dp[i][j];
+    }
+}
