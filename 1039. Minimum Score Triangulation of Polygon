@@ -1,0 +1,35 @@
+https://leetcode.com/problems/minimum-score-triangulation-of-polygon/description/
+Intution:
+  - MCM
+
+Algorithm:
+
+class Solution {
+    public int minScoreTriangulation(int[] values) {
+        int n=values.length;
+        int [][] dp=new int[n+1][n+1];
+        for(int[] row:dp)
+            Arrays.fill(row,-1);
+
+        return solve(values,0,n-1,dp);
+
+    }
+
+    public int solve(int [] values, int i, int j,int [][] dp){
+
+        if(i+1==j)
+            return 0;
+
+        if(dp[i][j]!=-1)
+            return dp[i][j];
+
+        int minCost=Integer.MAX_VALUE;
+        for(int k=i+1;k<j;k++){
+            
+            int c=values[i]*values[k]*values[j]+solve(values,k,j,dp)+solve(values, i,k,dp);
+            minCost=Math.min(c,minCost);
+        }
+        dp[i][j]=minCost;
+        return dp[i][j];
+    }
+}
