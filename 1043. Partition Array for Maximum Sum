@@ -1,0 +1,33 @@
+https://leetcode.com/problems/partition-array-for-maximum-sum/description/
+
+class Solution {
+    public int maxSumAfterPartitioning(int[] arr, int k) {
+     
+     int n=arr.length;
+     int [] dp=new int [n+1];
+
+     
+        Arrays.fill(dp,-1);
+     
+     return solve(arr, 0,k,dp);
+    }
+
+    public int solve(int [] arr, int i, int k,int [] dp){
+        if(i>arr.length){
+            return 0;
+        }
+
+        if(dp[i]!=-1){
+            return dp[i];
+        }
+        int maxVal=0;
+        int temp=0;
+       for(int n=1;n<=k && n+i<=arr.length;n++){
+        temp=Math.max(temp,arr[i+n-1]);
+        maxVal=Math.max(maxVal,temp*n+solve(arr,i+n,k,dp));
+       
+       }
+    dp[i]=maxVal;
+       return dp[i];
+    }
+}
