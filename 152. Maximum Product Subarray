@@ -1,0 +1,66 @@
+https://leetcode.com/problems/maximum-product-subarray/description/
+
+Two Approach : 
+  1. Using DP
+      - maintain two product maxProduct and minProduct.
+      - case when nums[i]<0 
+            then maxProduct=minProduct*nums[i]
+                minProduct=temp*nums[i]
+      - case when nums[i]=0
+            then math.max(nums[i],maxProduct*nums[i])
+                math.min(nums[i],minProduct*nums[i])
+  2. Using Prefix sum
+      - traverse array from start and end and maintain leftPrudtc and rightProduct. and return Math.max(leftProduct,RightProduct)
+
+
+
+DP Approach:
+class Solution {
+    public int maxProduct(int[] nums) {
+        
+        int maxProduct=nums[0];
+        int minProduct=nums[0];
+        int res=nums[0];
+        for(int i=1;i<nums.length;i++){
+            
+                
+           if(nums[i]<0){
+                int temp=maxProduct;
+                maxProduct=minProduct;
+                minProduct=temp;
+           }
+            maxProduct=Math.max(nums[i],maxProduct*nums[i]);
+            minProduct=Math.min(nums[i],minProduct*nums[i]);
+            
+            res=Math.max(res,maxProduct);
+
+            
+        }
+        return res;
+    }
+}
+
+
+
+Prefix Sum Approach:
+class Solution{
+public int maxProduct(int[] nums) {
+        int n=nums.length;
+        int leftProduct=1;
+        int rightProduct=1;
+        int maxProduct=Integer.MIN_VALUE;
+        for(int i=0;i<n;i++){
+            if(leftProduct==0){
+                leftProduct=1;
+            }
+            if(rightProduct==0){
+                rightProduct=1;
+            }
+            leftProduct*=nums[i];
+            rightProduct*=nums[n-i-1];
+            int maxPrd=Math.max(leftProduct,rightProduct);
+            maxProduct=Math.max(maxPrd,maxProduct);
+        }
+        return maxProduct;
+    }
+}
