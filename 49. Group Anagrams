@@ -1,0 +1,35 @@
+https://leetcode.com/problems/group-anagrams/description/
+
+Intution :
+  - Anagram is of same charactar with shuffled arrangements
+
+Algortihm:
+  - create a Map
+  -iterrate through loop
+      - sort each of the arr[i] string
+      - check the value in Map or not 
+  - return the map.values
+
+
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        Map<String,List<String>> map=new HashMap<>();
+
+        for(String s:strs){
+            char [] ch=s.toCharArray();
+            Arrays.sort(ch);
+            String s1=new String (ch);
+            List<String>  l=map.get(s1);
+            if(l==null){
+                l=new ArrayList<String>();
+
+            }
+            l.add(s);
+            map.put(s1,l);
+
+        }
+        
+        return map.values().stream().collect(Collectors.toList());
+    }
+}
+
